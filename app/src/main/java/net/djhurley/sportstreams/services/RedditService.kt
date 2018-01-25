@@ -48,8 +48,15 @@ class RedditService {
         val json = jsonArray[1] as JsonObject
 
         val bodies = json.lookup<String>("data.children.data.body")
-        val filteredBodies = bodies.filter { it.contains("acestream://") }
-        filteredBodies.forEach { body: String -> links.addAll("acestream://[a-z0-9]+".toRegex().find(body)?.groupValues as Collection<String>) }
+        val filteredAcestreamBodies = bodies.filter { it.contains("acestream://")}
+        filteredAcestreamBodies.forEach {
+            body: String -> links.addAll("acestream://[a-z0-9]+".toRegex().find(body)?.groupValues as Collection<String>)
+        }
+
+        val filteredWebLinkBodies = bodies.filter { it.contains("http://") || it.contains("https://") }
+        filteredWebLinkBodies.forEach {
+            body: String -> links.addAll("https?://[^\\)]*".toRegex().find(body)?.groupValues as Collection<String>)
+        }
 
         return links
     }

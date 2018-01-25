@@ -16,7 +16,7 @@ class RedditServiceTest {
 
     @Test
     fun getSoccerStream() {
-        val url = "https://www.reddit.com/r/soccerstreams/comments/7or6oc/1730_gmt_athletic_club_vs_deportivo_alaves/.json"
+        val url = "https://www.reddit.com/r/soccerstreams/comments/7p1ljk/2100_gmt_estoril_x_feirense/.json"
         val links = RedditService().getSoccerStreamLinks(url)
         Assert.assertNotNull(links)
     }

@@ -3,6 +3,7 @@ package net.djhurley.sportstreams.fragments
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v17.leanback.app.DetailsFragment
@@ -116,18 +117,19 @@ class StreamDetailsFragment : DetailsFragment() {
     private fun setupDetailsOverviewRowPresenter() {
         // Set detail background.
         val detailsPresenter = FullWidthDetailsOverviewRowPresenter(DetailsDescriptionPresenter())
-        detailsPresenter.backgroundColor =
-                ContextCompat.getColor(activity, R.color.selected_background)
+        detailsPresenter.backgroundColor = ContextCompat.getColor(activity, R.color.selected_background)
 
         // Hook up transition element.
         val sharedElementHelper = FullWidthDetailsOverviewSharedElementHelper()
-        sharedElementHelper.setSharedElementEnterTransition(
-                activity, StreamDetailsActivity.SHARED_ELEMENT_NAME)
+        sharedElementHelper.setSharedElementEnterTransition(activity, StreamDetailsActivity.SHARED_ELEMENT_NAME)
         detailsPresenter.setListener(sharedElementHelper)
         detailsPresenter.isParticipatingEntranceTransition = true
 
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action ->
-            Toast.makeText(activity, action.toString(), Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity, action.toString(), Toast.LENGTH_SHORT).show()
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(action.toString())
+            startActivity(i)
         }
         mPresenterSelector.addClassPresenter(DetailsOverviewRow::class.java, detailsPresenter)
     }
