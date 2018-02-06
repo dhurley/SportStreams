@@ -33,6 +33,15 @@ class RedditService {
                 timesAndTitles[it].split("[")[1].split("] ")[1],
                 getImageUrl(leagues.getOrNull(it) ?: alternativeLeagues[it]),
                 urls[it] + ".json") }
+
+//        val list : MutableList<Stream> = mutableListOf()
+//        list.add(Stream("Premier League",
+//                "01:12",
+//                "Man Utd",
+//                "",
+//                "https://np.reddit.com/r/soccerstreams/comments/7uz6e3/1500_gmt_manchester_united_vs_huddersfield_town/.json"))
+//
+//        return list
     }
 
     fun getSoccerStreamLinks(url: String) : List<String> {

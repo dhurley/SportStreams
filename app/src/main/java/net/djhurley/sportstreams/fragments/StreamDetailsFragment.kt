@@ -12,7 +12,6 @@ import android.support.v17.leanback.widget.*
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.animation.GlideAnimation
@@ -102,14 +101,14 @@ class StreamDetailsFragment : DetailsFragment() {
                         }
                     })
 
+            val actionAdapter = ArrayObjectAdapter()
             var id = 0L
             links.forEach {
-                val actionAdapter = ArrayObjectAdapter()
                 actionAdapter.add(Action(id, it))
-                row.actionsAdapter = actionAdapter
                 id++
             }
 
+            row.actionsAdapter = actionAdapter
             mAdapter.add(row)
         }
     }
@@ -126,10 +125,9 @@ class StreamDetailsFragment : DetailsFragment() {
         detailsPresenter.isParticipatingEntranceTransition = true
 
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action ->
-//            Toast.makeText(activity, action.toString(), Toast.LENGTH_SHORT).show()
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(action.toString())
-            startActivity(i)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(action.toString())
+            startActivity(intent)
         }
         mPresenterSelector.addClassPresenter(DetailsOverviewRow::class.java, detailsPresenter)
     }
@@ -143,7 +141,7 @@ class StreamDetailsFragment : DetailsFragment() {
         override fun onItemClicked(itemViewHolder: Presenter.ViewHolder?, item: Any?,
                                    rowViewHolder: RowPresenter.ViewHolder, row: Row) {
             if (item is Stream) {
-                Log.d(TAG, "Item: " + item.toString())
+                Log.d(TAG, "Item: " + item)
                 val intent = Intent(activity, StreamDetailsActivity::class.java)
                 intent.putExtra(resources.getString(R.string.stream), mSelectedStream)
 
@@ -157,9 +155,9 @@ class StreamDetailsFragment : DetailsFragment() {
     }
 
     companion object {
-        private val TAG = "StreamDetailsFragment"
+        private const val TAG = "StreamDetailsFragment"
 
-        private val DETAIL_THUMB_WIDTH = 274
-        private val DETAIL_THUMB_HEIGHT = 274
+        private const val DETAIL_THUMB_WIDTH = 274
+        private const val DETAIL_THUMB_HEIGHT = 274
     }
 }
